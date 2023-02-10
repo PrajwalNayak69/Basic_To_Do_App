@@ -1,14 +1,10 @@
 const express = require('express')
 const fs = require('fs')
-const dup = require('find-duplicated-property-keys')
-
 
 const app = express()
 
-//const databuffer = fs.readFileSync('To-DO.json')
 
-
-app.get('/list', (req, res) => {
+app.get('/', (req, res) => {
     fs.readFile('/Users/prajwal/Ng-Next Things/node-course/TO-DO/To-DO.json' ,  'utf8', function (err, data )
 {
     if(err)
@@ -63,10 +59,6 @@ else{
 
 }
 
-// else{
-//     res.send('enter another detail!')
-// }
-
 }})
 
 })
@@ -84,7 +76,10 @@ app.get('/delete', (req, res) => {
         else{
             const file = JSON.parse(data)
             const key = req.query.id
-            
+            var id = file.array
+            file.array = id.filter((newid) => {return newid.id !== key})
+            fs.writeFileSync('/Users/prajwal/Ng-Next Things/node-course/TO-DO/To-DO.json', JSON.stringify(file, null, 2))
+            res.send('tying to do something')
         }
     })
 
